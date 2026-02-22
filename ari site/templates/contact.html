@@ -45,6 +45,19 @@
             background-color: #f0fdf4;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
+
+        .phone-number {
+            display: block;
+            margin-top: 0.5rem;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .phone-icon {
+            color: var(--primary-color);
+            margin-right: 0.4rem;
+        }
     </style>
 </head>
 
@@ -56,24 +69,45 @@
                     <img src="{{ url_for('static', filename='title.png') }}" alt="Rice Doctor Title"
                         class="title-image">
                 </a>
+                <nav>
+                    <a href="/" class="nav-link">ഹോം</a>
+                    <a href="/chat" class="nav-link">കൂട്ടായ്മ</a>
+                    <a href="/contact" class="nav-link active">ബന്ധപ്പെടുക</a>
+
+                    {% if session.get('username') %}
+                    <span class="nav-user">👤 {{ session['username'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="nav-link logout-btn">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link login-btn">Login</a>
+                    {% endif %}
+                </nav>
             </div>
-            <nav>
-                <a href="/" class="nav-link">ഹോം</a>
-                <a href="/chat" class="nav-link">കൂട്ടായ്മ</a>
-                <a href="/contact" class="nav-link active">ബന്ധപ്പെടുക</a>
-            </nav>
-        </div>
     </header>
 
     <main class="main-content">
         <div class="contact-container">
             <h1 class="contact-header">ഞങ്ങളെ ബന്ധപ്പെടുക (Team)</h1>
             <ul class="team-list">
-                <li class="team-member">Arathi V</li>
-                <li class="team-member">Athira Harikumar</li>
-                <li class="team-member">Athira Mani</li>
-                <li class="team-member">Dino Saji Sam</li>
-                <li class="team-member">Abel Tom Augustine</li>
+                <li class="team-member">
+                    Arathi V
+                    <span class="phone-number"><span class="phone-icon">📞</span> xxxxxxxxxx</span>
+                </li>
+                <li class="team-member">
+                    Athira Harikumar
+                    <span class="phone-number"><span class="phone-icon">📞</span> xxxxxxxxxx</span>
+                </li>
+                <li class="team-member">
+                    Athira Mani
+                    <span class="phone-number"><span class="phone-icon">📞</span> xxxxxxxxxx</span>
+                </li>
+                <li class="team-member">
+                    Dino Saji Sam
+                    <span class="phone-number"><span class="phone-icon">📞</span> xxxxxxxxxx</span>
+                </li>
+                <li class="team-member">
+                    Abel Tom Augustine
+                    <span class="phone-number"><span class="phone-icon">📞</span> xxxxxxxxxx</span>
+                </li>
             </ul>
         </div>
     </main>

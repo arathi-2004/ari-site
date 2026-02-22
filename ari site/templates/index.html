@@ -16,18 +16,27 @@
             <div class="logo-area">
                 <!-- User: Replace 'static/title.png' with your actual title image -->
                 <img src="{{ url_for('static', filename='title.png') }}" alt="Rice Doctor Title" class="title-image">
+                <nav>
+                    <a href="/" class="nav-link">ഹോം</a>
+                    <a href="/chat" class="nav-link">കൂട്ടായ്മ</a>
+                    <a href="/contact" class="nav-link">ബന്ധപ്പെടുക</a>
+
+                    {% if session.get('username') %}
+                    <span class="nav-user">👤 {{ session['username'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="nav-link logout-btn">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link login-btn">Login</a>
+                    {% endif %}
+                </nav>
             </div>
-            <nav>
-                <a href="/" class="nav-link">ഹോം</a>
-                <a href="/chat" class="nav-link">കൂട്ടായ്മ</a>
-                <a href="/contact" class="nav-link">ബന്ധപ്പെടുക</a>
-            </nav>
-        </div>
     </header>
 
     <main class="main-content">
         <div class="hero-section">
             <div class="container">
+                <!-- Weather bar — populated by JS after geolocation -->
+                <div id="weather-bar" class="hidden"></div>
+
                 <div class="content-wrapper">
                     <div class="text-column">
                         <h1>നിങ്ങളുടെ നെൽകൃഷി സംരക്ഷിക്കുക</h1>
@@ -59,6 +68,10 @@
                                 <h2>പരിശോധനാ ഫലം</h2>
                                 <p class="prediction-text">രോഗം: <span id="disease-name" class="highlight"></span></p>
                                 <p class="confidence-text">കൃത്യത: <span id="confidence-score"></span>%</p>
+                                <div id="recommendation-box" class="recommendation-box hidden">
+                                    <p class="recommendation-label">🌿 ശുപാർശ:</p>
+                                    <p id="recommendation-text" class="recommendation-text"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,6 +79,20 @@
             </div>
         </div>
     </main>
+
+    <!-- Location Request Modal -->
+    <div id="location-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-icon">📍</div>
+            <h2>ലൊക്കേഷൻ അനുമതി</h2>
+            <p>നിങ്ങളുടെ പ്രദേശത്തെ കാലാവസ്ഥയെ അടിസ്ഥാനമാക്കി കൂടുതൽ കൃത്യമായ നിർദ്ദേശങ്ങൾ നൽകുന്നതിന് നിങ്ങളുടെ
+                ലൊക്കേഷൻ ആവശ്യമാണ്.</p>
+            <div class="modal-buttons">
+                <button id="allow-location-btn" class="btn primary">അനുവദിക്കുക</button>
+                <button id="deny-location-btn" class="btn secondary">വേണ്ട</button>
+            </div>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
